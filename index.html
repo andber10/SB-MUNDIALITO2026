@@ -466,12 +466,10 @@ function renderMaster(){
     PLAYERS_DEF.forEach(p=>{
       const fc=state.forecasts[p.id]&&state.forecasts[p.id][m.id];
       const pts=res&&fc?calcPts(fc,res):null;
-      // Admin can reset a forecast (button ↺) if result not yet inserted
-      const resetBtn=fc&&!res?`<button onclick="resetForecast('${p.id}','${m.id}')" style="margin-left:4px;padding:1px 6px;font-size:10px;background:#E24B4A;color:#fff;border:none;border-radius:4px;cursor:pointer;vertical-align:middle" title="Sblocca pronostico — il giocatore potrà reinserirlo">↺</button>`:'';
       cells.push(
         res
           ? (fc ? `<span style="background:#fff9c4;color:#7d6608;padding:2px 8px;border-radius:6px;font-weight:600">${fc}</span>` : `<span style="color:#ccc">—</span>`)
-          : (fc ? `<span style="background:#e0e0e0;color:#999;padding:2px 8px;border-radius:6px;font-size:11px;user-select:none" title="Visibile dopo il risultato">●●●</span>${resetBtn}` : `<span style="color:#ccc">—</span>`)
+          : (fc ? `<span style="background:#e0e0e0;color:#e0e0e0;padding:2px 8px;border-radius:6px;font-size:11px;user-select:none" title="Visibile dopo il risultato">●●●</span>` : `<span style="color:#ccc">—</span>`)
       );
       if(pts===8)cells.push(`<span class="pts-badge pts-8">+8</span>`);
       else if(pts===3)cells.push(`<span class="pts-badge pts-3">+3</span>`);
@@ -513,15 +511,6 @@ function renderClassifica(){
   });
 }
 
-async function resetForecast(playerId, matchId){
-  const p=PLAYERS_DEF.find(x=>x.id===playerId);
-  if(!confirm(`Sbloccare il pronostico di ${p?p.name:playerId} per la partita ${matchId}? Potrà reinserirlo.`))return;
-  if(state.forecasts[playerId]) delete state.forecasts[playerId][matchId];
-  await saveState();
-  toast(`Pronostico di ${p?p.name:playerId} sbloccato`,"#185FA5");
-  renderMaster();
-}
-window.resetForecast=resetForecast;
 window.saveAll=()=>{};
 window.openChangePwd=openChangePwd;
 window.loginAdmin=loginAdmin;
