@@ -174,8 +174,8 @@ const MATCHES=[
   {id:"A27",g:"B",d:"19/06",a:"Canada",b:"Qatar"},{id:"A28",g:"A",d:"19/06",a:"Messico",b:"Corea del Sud"},
   {id:"A29",g:"D",d:"19/06",a:"Turchia",b:"Paraguay"},{id:"A30",g:"D",d:"19/06",a:"USA",b:"Australia"},
   {id:"A31",g:"C",d:"20/06",a:"Scozia",b:"Marocco"},{id:"A32",g:"C",d:"20/06",a:"Brasile",b:"Haiti"},
-  {id:"A33",g:"E",d:"20/06",a:"Germania",b:"Costa d'Avorio"},{id:"A34",g:"F",d:"20/06",a:"Olanda",b:"Tunisia"},
-  {id:"A35",g:"E",d:"21/06",a:"Ecuador",b:"Curaçao"},{id:"A36",g:"F",d:"21/06",a:"Giappone",b:"Tunisia"},
+  {id:"A33",g:"E",d:"20/06",a:"Germania",b:"Costa d'Avorio"},{id:"A34",g:"F",d:"20/06",a:"Olanda",b:"Svezia"},
+  {id:"A35",g:"E",d:"21/06",a:"Ecuador",b:"Curaçao"},{id:"A36",g:"F",d:"21/06",a:"Tunisia",b:"Giappone"},
   {id:"A37",g:"H",d:"21/06",a:"Spagna",b:"Arabia Saudita"},{id:"A38",g:"G",d:"21/06",a:"Belgio",b:"Nuova Zelanda"},
   {id:"A39",g:"H",d:"22/06",a:"Uruguay",b:"Capo Verde"},{id:"A40",g:"G",d:"22/06",a:"Egitto",b:"Nuova Zelanda"},
   {id:"A41",g:"J",d:"22/06",a:"Argentina",b:"Giordania"},{id:"A42",g:"I",d:"22/06",a:"Francia",b:"Iraq"},
@@ -466,11 +466,12 @@ function renderMaster(){
     PLAYERS_DEF.forEach(p=>{
       const fc=state.forecasts[p.id]&&state.forecasts[p.id][m.id];
       const pts=res&&fc?calcPts(fc,res):null;
-      // Show forecast only if result is already available (to hide from opponents)
+      // Admin can reset a forecast (button ↺) if result not yet inserted
+      const resetBtn=fc&&!res?`<button onclick="resetForecast('${p.id}','${m.id}')" style="margin-left:4px;padding:1px 6px;font-size:10px;background:#E24B4A;color:#fff;border:none;border-radius:4px;cursor:pointer;vertical-align:middle" title="Sblocca pronostico — il giocatore potrà reinserirlo">↺</button>`:'';
       cells.push(
         res
           ? (fc ? `<span style="background:#fff9c4;color:#7d6608;padding:2px 8px;border-radius:6px;font-weight:600">${fc}</span>` : `<span style="color:#ccc">—</span>`)
-          : (fc ? `<span style="background:#e0e0e0;color:#e0e0e0;padding:2px 8px;border-radius:6px;font-size:11px;user-select:none" title="Visibile dopo il risultato">●●●</span>` : `<span style="color:#ccc">—</span>`)
+          : (fc ? `<span style="background:#e0e0e0;color:#999;padding:2px 8px;border-radius:6px;font-size:11px;user-select:none" title="Visibile dopo il risultato">●●●</span>${resetBtn}` : `<span style="color:#ccc">—</span>`)
       );
       if(pts===8)cells.push(`<span class="pts-badge pts-8">+8</span>`);
       else if(pts===3)cells.push(`<span class="pts-badge pts-3">+3</span>`);
@@ -512,6 +513,15 @@ function renderClassifica(){
   });
 }
 
+async function resetForecast(playerId, matchId){
+  const p=PLAYERS_DEF.find(x=>x.id===playerId);
+  if(!confirm(`Sbloccare il pronostico di ${p?p.name:playerId} per la partita ${matchId}? Potrà reinserirlo.`))return;
+  if(state.forecasts[playerId]) delete state.forecasts[playerId][matchId];
+  await saveState();
+  toast(`Pronostico di ${p?p.name:playerId} sbloccato`,"#185FA5");
+  renderMaster();
+}
+window.resetForecast=resetForecast;
 window.saveAll=()=>{};
 window.openChangePwd=openChangePwd;
 window.loginAdmin=loginAdmin;
