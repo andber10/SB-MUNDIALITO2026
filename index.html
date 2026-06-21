@@ -527,15 +527,15 @@ onStateChange(()=>{
 
 document.getElementById("loading-screen").style.display="none";
 await loadState();
-// A38 was corrected from Belgio-Nuova Zelanda to Belgio-Iran — reset forecasts for all
-let cleaned = false;
-["gioacchino","andrea","giuliano"].forEach(pid => {
-  if(state.forecasts[pid] && state.forecasts[pid]["A38"]) {
-    delete state.forecasts[pid]["A38"];
-    cleaned = true;
-  }
-});
-if(cleaned) await saveState();
+// A38 was corrected from Belgio-Nuova Zelanda to Belgio-Iran — reset forecasts once
+if(!state.fixes || !state.fixes.a38reset) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => {
+    if(state.forecasts[pid]) delete state.forecasts[pid]["A38"];
+  });
+  if(!state.fixes) state.fixes = {};
+  state.fixes.a38reset = true;
+  await saveState();
+}
 buildPlayerLogin();
 goTo("login");
 </script>
