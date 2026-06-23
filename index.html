@@ -550,6 +550,11 @@ if(!state.fixes.a45reset) {
   ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A45"]; });
   state.fixes.a45reset = true; needSave = true;
 }
+// A48v2: Croazia-Ghana -> Panama-Croazia
+if(!state.fixes.a48v2reset) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A48"]; });
+  state.fixes.a48v2reset = true; needSave = true;
+}
 if(needSave) await saveState();
 buildPlayerLogin();
 goTo("login");
