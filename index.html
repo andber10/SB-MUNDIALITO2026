@@ -180,8 +180,8 @@ const MATCHES=[
   {id:"A39",g:"H",d:"22/06",a:"Uruguay",b:"Capo Verde"},{id:"A40",g:"G",d:"22/06",a:"Egitto",b:"Nuova Zelanda"},
   {id:"A41",g:"J",d:"22/06",a:"Argentina",b:"Austria"},{id:"A42",g:"I",d:"22/06",a:"Francia",b:"Iraq"},
   {id:"A43",g:"I",d:"23/06",a:"Norvegia",b:"Senegal"},{id:"A44",g:"J",d:"23/06",a:"Algeria",b:"Giordania"},
-  {id:"A45",g:"L",d:"23/06",a:"Inghilterra",b:"Panama"},{id:"A46",g:"K",d:"23/06",a:"Portogallo",b:"Uzbekistan"},
-  {id:"A47",g:"K",d:"24/06",a:"Colombia",b:"DR Congo"},{id:"A48",g:"L",d:"24/06",a:"Croazia",b:"Ghana"},
+  {id:"A45",g:"L",d:"23/06",a:"Inghilterra",b:"Ghana"},{id:"A46",g:"K",d:"23/06",a:"Portogallo",b:"Uzbekistan"},
+  {id:"A47",g:"K",d:"24/06",a:"Colombia",b:"DR Congo"},{id:"A48",g:"L",d:"24/06",a:"Panama",b:"Croazia"},
   {id:"A49",g:"B",d:"24/06",a:"Svizzera",b:"Canada"},{id:"A50",g:"B",d:"24/06",a:"Bosnia-Erz.",b:"Qatar"},
   {id:"A51",g:"C",d:"25/06",a:"Marocco",b:"Haiti"},{id:"A52",g:"C",d:"25/06",a:"Scozia",b:"Brasile"},
   {id:"A53",g:"A",d:"25/06",a:"Rep. Ceca",b:"Messico"},{id:"A54",g:"A",d:"25/06",a:"Sudafrica",b:"Corea del Sud"},
@@ -544,6 +544,11 @@ if(!state.fixes.a41reset) {
 if(!state.fixes.a48reset) {
   ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A48"]; });
   state.fixes.a48reset = true; needSave = true;
+}
+// A45: Inghilterra-Panama -> Inghilterra-Ghana
+if(!state.fixes.a45reset) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A45"]; });
+  state.fixes.a45reset = true; needSave = true;
 }
 if(needSave) await saveState();
 buildPlayerLogin();
