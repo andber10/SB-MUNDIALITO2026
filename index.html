@@ -190,9 +190,9 @@ const MATCHES=[
   {id:"A59",g:"G",d:"26/06",a:"Belgio",b:"Nuova Zelanda"},{id:"A60",g:"G",d:"26/06",a:"Egitto",b:"Iran"},
   {id:"A61",g:"H",d:"27/06",a:"Uruguay",b:"Spagna"},{id:"A62",g:"H",d:"27/06",a:"Capo Verde",b:"Arabia Saudita"},
   {id:"A63",g:"I",d:"27/06",a:"Norvegia",b:"Francia"},{id:"A64",g:"I",d:"27/06",a:"Senegal",b:"Iraq"},
-  {id:"A65",g:"J",d:"27/06",a:"Austria",b:"Argentina"},{id:"A66",g:"J",d:"27/06",a:"Algeria",b:"Giordania"},
+  {id:"A65",g:"J",d:"28/06",a:"Giordania",b:"Argentina"},{id:"A66",g:"J",d:"28/06",a:"Algeria",b:"Austria"},
   {id:"A67",g:"K",d:"27/06",a:"Colombia",b:"Portogallo"},{id:"A68",g:"K",d:"27/06",a:"DR Congo",b:"Uzbekistan"},
-  {id:"A69",g:"L",d:"27/06",a:"Ghana",b:"Panama"},{id:"A70",g:"L",d:"27/06",a:"Croazia",b:"Inghilterra"},
+  {id:"A69",g:"L",d:"27/06",a:"Panama",b:"Inghilterra"},{id:"A70",g:"L",d:"27/06",a:"Croazia",b:"Ghana"},
   {id:"S1",g:"16",d:"28/06",a:"",b:""},{id:"S2",g:"16",d:"29/06",a:"",b:""},{id:"S3",g:"16",d:"29/06",a:"",b:""},{id:"S4",g:"16",d:"29/06",a:"",b:""},
   {id:"S5",g:"16",d:"30/06",a:"",b:""},{id:"S6",g:"16",d:"30/06",a:"",b:""},{id:"S7",g:"16",d:"30/06",a:"",b:""},{id:"S8",g:"16",d:"30/06",a:"",b:""},
   {id:"S9",g:"16",d:"01/07",a:"",b:""},{id:"S10",g:"16",d:"01/07",a:"",b:""},{id:"S11",g:"16",d:"02/07",a:"",b:""},{id:"S12",g:"16",d:"02/07",a:"",b:""},
@@ -554,6 +554,23 @@ if(!state.fixes.a45reset) {
 if(!state.fixes.a48v2reset) {
   ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A48"]; });
   state.fixes.a48v2reset = true; needSave = true;
+}
+
+if(!state.fixes.a65g3fix) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A65"]; });
+  state.fixes.a65g3fix = true; needSave = true;
+}
+if(!state.fixes.a66g3fix) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A66"]; });
+  state.fixes.a66g3fix = true; needSave = true;
+}
+if(!state.fixes.a69g3fix) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A69"]; });
+  state.fixes.a69g3fix = true; needSave = true;
+}
+if(!state.fixes.a70g3fix) {
+  ["gioacchino","andrea","giuliano"].forEach(pid => { if(state.forecasts[pid]) delete state.forecasts[pid]["A70"]; });
+  state.fixes.a70g3fix = true; needSave = true;
 }
 if(needSave) await saveState();
 buildPlayerLogin();
